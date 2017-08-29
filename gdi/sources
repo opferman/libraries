@@ -1,0 +1,16 @@
+
+TARGETNAME = gdi
+TARGETTYPE = LIBRARY
+TARGETPATH = lib
+TARGETEXT  = LIB
+
+INCLUDES = $(INCLUDES);..\inc
+
+USE_MSVCRT = 1
+
+
+UMTYPE = windows
+
+SOURCES = gdi.c
+
+

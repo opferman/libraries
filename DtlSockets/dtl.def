@@ -1,0 +1,8 @@
+EXPORTS
+Dtl_Create_Client
+Dtl_Create_Server
+Dtl_SocketWaitForRead
+Dtl_SendSocketData
+Dtl_ReadSocketData
+Dtl_GetLastError
+Dtl_Destroy

@@ -1,0 +1,15 @@
+# Copyright (c) 1999-2000 Microsoft Corporation. All Rights Reserved.
+
+TARGETNAME = LEVELENG
+TARGETTYPE = LIBRARY
+TARGETPATH = LIB
+TARGETEXT  = LIB
+
+INCLUDES = $(INCLUDES);..\inc
+
+USE_MSVCRT = 1
+
+
+SOURCES = level.c
+
+

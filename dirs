@@ -1,0 +1,15 @@
+dirs=3d \
+3dsDecode \
+audio\
+DtlSockets\
+gdi\
+gif\
+IRC\
+IRC2\
+json\
+leveleng\
+raycaster\
+raylevel\
+threadlib\
+tile
+

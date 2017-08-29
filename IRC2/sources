@@ -1,0 +1,23 @@
+
+# Example
+#
+
+TARGETNAME=irc2
+TARGETPATH=lib
+TARGETTYPE=DYNLINK
+DLLENTRY=DllMain
+
+SOURCES= commands.c  engine.c  parse.c internalcommands.c debug.c
+
+INCLUDES=$(INCLUDES);..\inc
+
+C_DEFINES=$(C_DEFINES)  /O2 /Oi
+
+TARGETLIBS=$(TARGETLIBS)\
+           $(SDK_LIB_PATH)\ws2_32.lib \
+           $(SDK_LIB_PATH)\shlwapi.lib \
+           $(SDK_LIB_PATH)\kernel32.lib \
+           ..\dtl\lib\*\dtl.lib 
+
+USE_MSVCRT=1
+

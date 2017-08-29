@@ -1,0 +1,13 @@
+EXPORTS
+IRC_ConnectToServer
+IRC_ChangeNick
+IRC_SendQuitMessage
+IRC_SendPongMessage
+IRC_JoinChannel
+IRC_PartChannel
+IRC_NoticeNick
+IRC_MsgNick
+IRC_NoticeChannel
+IRC_MsgChannel
+IRC_SendUserData
+IRC_Destroy

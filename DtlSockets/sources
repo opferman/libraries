@@ -1,0 +1,21 @@
+#
+# Example
+#
+
+TARGETNAME=dtl
+TARGETPATH=lib
+TARGETTYPE=DYNLINK
+DLLENTRY=DllMain
+
+
+SOURCES= dtl.c
+
+# INCLUDES=$(INCLUDES);..\inc
+
+INCLUDE=$(INCLUDE);C:\Program Files (x86)\Microsoft Visual Studio 8\VC\PlatformSDK\Include;..\inc
+
+TARGETLIBS=$(TARGETLIBS)\
+           $(SDK_LIB_PATH)\ws2_32.lib \
+           $(SDK_LIB_PATH)\kernel32.lib
+
+
