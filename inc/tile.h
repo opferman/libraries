@@ -35,7 +35,7 @@ typedef struct _TILEINFO {
 
     DWORD dwTileFlags;
 
-	DWORD dwTileCallBackId;
+    DWORD dwTileCallBackId;
     PVOID pTileCallbackContext;
     PFNTILECALLBACK pfnTileCallback;
 
@@ -47,17 +47,17 @@ typedef struct _TILE_MAP {
     PFNDRAWTILE       pfnDrawTile;
     PFNSPRITECALLBACK pfnDrawSprite;
 
-	DWORD dwResolutionX;
-	DWORD dwResolutionY;
+    DWORD dwResolutionX;
+    DWORD dwResolutionY;
 
-	DWORD dwTileSizeX;
-	DWORD dwTileSizeY;
+    DWORD dwTileSizeX;
+    DWORD dwTileSizeY;
 
-	DWORD dwCurrentTileX;
-	DWORD dwCurrentTileY;
+    DWORD dwCurrentTileX;
+    DWORD dwCurrentTileY;
 
-	DWORD dwViewWidth;
-	DWORD dwViewHeight;
+    DWORD dwViewWidth;
+    DWORD dwViewHeight;
 
     PTILEINFO pTileInfo;
 
@@ -67,36 +67,36 @@ typedef struct _TILE_MAP {
 
 typedef struct _TILE_SCREEN_POSITION {
 
-	DWORD ScreenX;
-	DWORD ScreenY;
+    DWORD ScreenX;
+    DWORD ScreenY;
 
 } TILE_SCREEN_POSITION, *PTILE_SCREEN_POSITION;
 
 
 typedef struct _TILE_SPRITE 
 {
-	DWORD dwSpriteId;
+    DWORD dwSpriteId;
     PVOID             pTileContext;
     PFNSPRITECALLBACK pfnDrawSprite;
-	PFNSPRITECOLLISION pfnSpriteCollision;
+    PFNSPRITECOLLISION pfnSpriteCollision;
 
-	DWORD dwCurrentTileX;
-	DWORD dwCurrentTileY;
+    DWORD dwCurrentTileX;
+    DWORD dwCurrentTileY;
 
-	DWORD dwViewWidth;
-	DWORD dwViewHeight;
+    DWORD dwViewWidth;
+    DWORD dwViewHeight;
 
-	DWORD dwFlags;
+    DWORD dwFlags;
 
 } TILE_SPRITE, *PTILE_SPRITE;
 
 typedef struct _TILE_LOCATION
 {
-	DWORD dwCurrentTileIndexX;
-	DWORD dwCurrentTileIndexY;
+    DWORD dwCurrentTileIndexX;
+    DWORD dwCurrentTileIndexY;
 
-	DWORD dwCurrentTileX;
-	DWORD dwCurrentTileY;
+    DWORD dwCurrentTileX;
+    DWORD dwCurrentTileY;
 
 } TILE_LOCATION, *PTILE_LOCATION;
 
@@ -141,3 +141,4 @@ void Tile_DestroyTileSprite(HTILESPRITE hTileSprite);
 
 #endif
 
+ 

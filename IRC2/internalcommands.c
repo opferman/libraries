@@ -79,3 +79,4 @@ IRCSTATUS IRC_SendText(HIRC hIrc, PCHAR pszTarget, PCHAR pszText, UINT uiTypeFla
    return IRC_SUCCESS;
 }
 
+ 

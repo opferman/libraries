@@ -26,36 +26,36 @@
   ********************************************************/
 HTILE WINAPI Tile_Init(PTILE_MAP pTileMap)
 {
-	PTILE_ENGINE pTileEng = NULL;
+    PTILE_ENGINE pTileEng = NULL;
 
-	if(pTileEng = (PTILE_ENGINE)LocalAlloc(LMEM_ZEROINIT, sizeof(TILE_ENGINE)))
-	{
-		pTileEng->dwResolutionX = pTileMap->dwResolutionX;
-		pTileEng->dwResolutionY = pTileMap->dwResolutionY;
-		pTileEng->dwTileSizeX   = pTileMap->dwTileSizeX;
-		pTileEng->dwTileSizeY   = pTileMap->dwTileSizeY;
-		pTileEng->pfnDrawTile   = pTileMap->pfnDrawTile;
+    if(pTileEng = (PTILE_ENGINE)LocalAlloc(LMEM_ZEROINIT, sizeof(TILE_ENGINE)))
+    {
+        pTileEng->dwResolutionX = pTileMap->dwResolutionX;
+        pTileEng->dwResolutionY = pTileMap->dwResolutionY;
+        pTileEng->dwTileSizeX   = pTileMap->dwTileSizeX;
+        pTileEng->dwTileSizeY   = pTileMap->dwTileSizeY;
+        pTileEng->pfnDrawTile   = pTileMap->pfnDrawTile;
                 pTileEng->pTileContext  = pTileMap->pTileContext;
-		pTileEng->pfnDrawSprite = pTileMap->pfnDrawSprite;
+        pTileEng->pfnDrawSprite = pTileMap->pfnDrawSprite;
 
-		pTileEng->MainSpriteLocation.dwCurrentTileX  = pTileMap->dwCurrentTileX;
-		pTileEng->MainSpriteLocation.dwCurrentTileY  = pTileMap->dwCurrentTileY;
+        pTileEng->MainSpriteLocation.dwCurrentTileX  = pTileMap->dwCurrentTileX;
+        pTileEng->MainSpriteLocation.dwCurrentTileY  = pTileMap->dwCurrentTileY;
 
-		pTileEng->MainSpriteLocation.dwCurrentViewWidth  = pTileMap->dwViewWidth;
-		pTileEng->MainSpriteLocation.dwCurrentViewHeight = pTileMap->dwViewHeight;
+        pTileEng->MainSpriteLocation.dwCurrentViewWidth  = pTileMap->dwViewWidth;
+        pTileEng->MainSpriteLocation.dwCurrentViewHeight = pTileMap->dwViewHeight;
 
-		Tile_CreateTileBox(pTileEng, &pTileEng->MainSpriteLocation, &pTileEng->MainTileBox);
+        Tile_CreateTileBox(pTileEng, &pTileEng->MainSpriteLocation, &pTileEng->MainTileBox);
 
-		if(pTileEng->pTileMap = (PTILEINFO)LocalAlloc(LMEM_ZEROINIT, sizeof(TILEINFO)*pTileEng->dwResolutionY*pTileEng->dwResolutionX))
-		{
-			memcpy(pTileEng->pTileMap, pTileMap->pTileInfo, sizeof(TILEINFO)*pTileEng->dwResolutionY*pTileEng->dwResolutionX);
-		}
-		else
-		{
-			Tile_UnInit((HTILE)pTileEng);
-			pTileEng = NULL;
-		}
-	}
+        if(pTileEng->pTileMap = (PTILEINFO)LocalAlloc(LMEM_ZEROINIT, sizeof(TILEINFO)*pTileEng->dwResolutionY*pTileEng->dwResolutionX))
+        {
+            memcpy(pTileEng->pTileMap, pTileMap->pTileInfo, sizeof(TILEINFO)*pTileEng->dwResolutionY*pTileEng->dwResolutionX);
+        }
+        else
+        {
+            Tile_UnInit((HTILE)pTileEng);
+            pTileEng = NULL;
+        }
+    }
 
     return (HTILE)pTileEng;
 }
@@ -72,22 +72,22 @@ HTILE WINAPI Tile_Init(PTILE_MAP pTileMap)
   ********************************************************/
 void WINAPI Tile_UnInit(HTILE hTile)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
 
-	if(pTileEng)
-	{
-		while(pTileEng->pSprites)
-		{
-			Tile_DestroyTileSprite((HTILESPRITE)pTileEng->pSprites);
-		}
+    if(pTileEng)
+    {
+        while(pTileEng->pSprites)
+        {
+            Tile_DestroyTileSprite((HTILESPRITE)pTileEng->pSprites);
+        }
 
-		if(pTileEng->pTileMap)
-		{
-			LocalFree(pTileEng->pTileMap);
-		}
+        if(pTileEng->pTileMap)
+        {
+            LocalFree(pTileEng->pTileMap);
+        }
 
-		LocalFree(pTileEng);
-	}
+        LocalFree(pTileEng);
+    }
 
 }
 
@@ -103,37 +103,37 @@ void WINAPI Tile_UnInit(HTILE hTile)
  ***********************************************************************/
 HTILESPRITE Tile_CreateTileSprite(HTILE hTile, PTILE_SPRITE pTileSprite)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
-	PTILE_SPRITE_ENG pTileSpriteEng = NULL;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_SPRITE_ENG pTileSpriteEng = NULL;
 
-	if(pTileSpriteEng = (PTILE_SPRITE_ENG)LocalAlloc(LMEM_ZEROINIT, sizeof(TILE_SPRITE_ENG)))
-	{
-		pTileSpriteEng->pNextSprite = pTileEng->pSprites;
-		
-		if(pTileEng->pSprites)
-		{
-			pTileEng->pSprites->pPrevSprite = pTileSpriteEng;
-		}
+    if(pTileSpriteEng = (PTILE_SPRITE_ENG)LocalAlloc(LMEM_ZEROINIT, sizeof(TILE_SPRITE_ENG)))
+    {
+        pTileSpriteEng->pNextSprite = pTileEng->pSprites;
+        
+        if(pTileEng->pSprites)
+        {
+            pTileEng->pSprites->pPrevSprite = pTileSpriteEng;
+        }
 
-		pTileEng->pSprites = pTileSpriteEng;
-	
+        pTileEng->pSprites = pTileSpriteEng;
+    
 
-		pTileSpriteEng->dwSpriteId    = pTileSprite->dwSpriteId;
-		pTileSpriteEng->pTileContext  = pTileSprite->pTileContext;
-		pTileSpriteEng->pfnDrawSprite = pTileSprite->pfnDrawSprite;
-		
-		pTileSpriteEng->pfnSpriteCollision = pTileSprite->pfnSpriteCollision;
-		
-		pTileSpriteEng->SpriteLocation.dwCurrentTileX = pTileSprite->dwCurrentTileX;
-		pTileSpriteEng->SpriteLocation.dwCurrentTileY = pTileSprite->dwCurrentTileY;
+        pTileSpriteEng->dwSpriteId    = pTileSprite->dwSpriteId;
+        pTileSpriteEng->pTileContext  = pTileSprite->pTileContext;
+        pTileSpriteEng->pfnDrawSprite = pTileSprite->pfnDrawSprite;
+        
+        pTileSpriteEng->pfnSpriteCollision = pTileSprite->pfnSpriteCollision;
+        
+        pTileSpriteEng->SpriteLocation.dwCurrentTileX = pTileSprite->dwCurrentTileX;
+        pTileSpriteEng->SpriteLocation.dwCurrentTileY = pTileSprite->dwCurrentTileY;
 
-		pTileSpriteEng->SpriteLocation.dwCurrentViewWidth  = pTileSprite->dwViewWidth;
-		pTileSpriteEng->SpriteLocation.dwCurrentViewHeight = pTileSprite->dwViewHeight;
-		pTileSpriteEng->dwFlags      = pTileSprite->dwFlags;
-		pTileSpriteEng->pTileEng     = pTileEng;
+        pTileSpriteEng->SpriteLocation.dwCurrentViewWidth  = pTileSprite->dwViewWidth;
+        pTileSpriteEng->SpriteLocation.dwCurrentViewHeight = pTileSprite->dwViewHeight;
+        pTileSpriteEng->dwFlags      = pTileSprite->dwFlags;
+        pTileSpriteEng->pTileEng     = pTileEng;
 
-		Tile_CreateTileBox(pTileEng, &pTileSpriteEng->SpriteLocation, &pTileSpriteEng->TileBox);
-	}
+        Tile_CreateTileBox(pTileEng, &pTileSpriteEng->SpriteLocation, &pTileSpriteEng->TileBox);
+    }
 
     return (HTILESPRITE)pTileSpriteEng;
 }
@@ -150,24 +150,24 @@ HTILESPRITE Tile_CreateTileSprite(HTILE hTile, PTILE_SPRITE pTileSprite)
  ***********************************************************************/
 void Tile_DestroyTileSprite(HTILESPRITE hTileSprite)
 {
-	PTILE_SPRITE_ENG pTileSpriteEng = (PTILE_SPRITE_ENG)hTileSprite;
+    PTILE_SPRITE_ENG pTileSpriteEng = (PTILE_SPRITE_ENG)hTileSprite;
 
-	if(pTileSpriteEng->pNextSprite)
-	{
-		pTileSpriteEng->pNextSprite->pPrevSprite = pTileSpriteEng->pPrevSprite;
-	}
+    if(pTileSpriteEng->pNextSprite)
+    {
+        pTileSpriteEng->pNextSprite->pPrevSprite = pTileSpriteEng->pPrevSprite;
+    }
 
-	if(pTileSpriteEng->pPrevSprite)
-	{
-		pTileSpriteEng->pPrevSprite->pNextSprite = pTileSpriteEng->pNextSprite;
-	}
+    if(pTileSpriteEng->pPrevSprite)
+    {
+        pTileSpriteEng->pPrevSprite->pNextSprite = pTileSpriteEng->pNextSprite;
+    }
 
-	if(pTileSpriteEng->pTileEng->pSprites == pTileSpriteEng)
-	{
-		pTileSpriteEng->pTileEng->pSprites = pTileSpriteEng->pNextSprite;
-	}
+    if(pTileSpriteEng->pTileEng->pSprites == pTileSpriteEng)
+    {
+        pTileSpriteEng->pTileEng->pSprites = pTileSpriteEng->pNextSprite;
+    }
 
-	LocalFree(pTileSpriteEng);
+    LocalFree(pTileSpriteEng);
 }
 
 
@@ -197,4 +197,4 @@ void Tile_DestroyTileSprite(HTILESPRITE hTileSprite)
      va_end(vl);
 
      OutputDebugStringA(DebugString);
- }
+ } 

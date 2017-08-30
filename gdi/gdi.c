@@ -437,3 +437,4 @@ BOOL WINAPI GDI_FadeToPalette(HGDI hGDI, PALETTEENTRY *pPaletteEntries)
 
 
 
+  

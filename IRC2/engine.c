@@ -118,37 +118,37 @@ void IRC_ParseIncommingData(PIRCSTRUC pIrcStruc, PCHAR pBuffer, UINT *puiIndex)
        if(IRC_IsEndOfMessage(pBuffer, uiEndOfMessageIndex))
        {
            do {
-			    memset(&IrcEventStruc, 0, sizeof(IRC_EVENT_STRUC));
-				memcpy(&IrcEventStruc.IrcUser, &pIrcStruc->IrcUser, sizeof(IRC_USER));
+                memset(&IrcEventStruc, 0, sizeof(IRC_EVENT_STRUC));
+                memcpy(&IrcEventStruc.IrcUser, &pIrcStruc->IrcUser, sizeof(IRC_USER));
 
                 IrcEventStruc.hIrc = (HIRC)pIrcStruc;
                 
-				IRC_ExtractMessageDetails(pIrcStruc, pBuffer + uiStartOfNextMessage, uiEndOfMessageIndex - uiStartOfNextMessage, &IrcEventStruc);
+                IRC_ExtractMessageDetails(pIrcStruc, pBuffer + uiStartOfNextMessage, uiEndOfMessageIndex - uiStartOfNextMessage, &IrcEventStruc);
 
                 if(IrcEventStruc.IrcEventId != IRC_EVENT_EMPTY_MESSAGE)
                 {
-				   IRC_CheckForEngineUpdates(pIrcStruc, &IrcEventStruc);
+                   IRC_CheckForEngineUpdates(pIrcStruc, &IrcEventStruc);
 
-				   if(pIrcStruc->IrcCallBacks.pfnIrcEventCallback[IrcEventStruc.IrcEventId])
-				   {
+                   if(pIrcStruc->IrcCallBacks.pfnIrcEventCallback[IrcEventStruc.IrcEventId])
+                   {
                       pIrcStruc->IrcCallBacks.pfnIrcEventCallback[IrcEventStruc.IrcEventId](pIrcStruc->pContext, &IrcEventStruc);
-				   }
+                   }
                 }
 
                 IRC_SkipToNextMessage(pBuffer, *puiIndex, uiEndOfMessageIndex);
 
-				if(*puiIndex > uiEndOfMessageIndex)
+                if(*puiIndex > uiEndOfMessageIndex)
                 {
                    uiStartOfNextMessage = uiEndOfMessageIndex;
 
                    IRC_FindEndOfMessage(pBuffer, *puiIndex, uiEndOfMessageIndex);
 
-				   if(IRC_IsEndOfMessage(pBuffer, uiEndOfMessageIndex) == FALSE)
+                   if(IRC_IsEndOfMessage(pBuffer, uiEndOfMessageIndex) == FALSE)
                    {
-					   *puiIndex = (*puiIndex) - uiStartOfNextMessage;
+                       *puiIndex = (*puiIndex) - uiStartOfNextMessage;
                        strncpy(pBuffer, pBuffer + uiStartOfNextMessage, *puiIndex);
                        bFoundWholeMessage = FALSE;
-				   }
+                   }
                    else
                    {
                        bFoundWholeMessage = TRUE;
@@ -181,15 +181,15 @@ void IRC_ParseIncommingData(PIRCSTRUC pIrcStruc, PCHAR pBuffer, UINT *puiIndex)
  *******************************************************************************/
 void IRC_CheckForEngineUpdates(PIRCSTRUC pIrcStruc, PIRC_EVENT_STRUC pIrcEventStruc)
 {
-	switch(pIrcEventStruc->IrcEventId)
-	{
-	      case IRC_EVENT_NICK:
-			   IRC_CheckForNickChange(pIrcStruc, pIrcEventStruc);
-			   break;
-	}
+    switch(pIrcEventStruc->IrcEventId)
+    {
+          case IRC_EVENT_NICK:
+               IRC_CheckForNickChange(pIrcStruc, pIrcEventStruc);
+               break;
+    }
 }
 
-
+ 
 /*******************************************************************************
  * IRC_CheckForNickChange                                                      *
  *                                                                             *
@@ -204,8 +204,8 @@ void IRC_CheckForEngineUpdates(PIRCSTRUC pIrcStruc, PIRC_EVENT_STRUC pIrcEventSt
  *******************************************************************************/
 void IRC_CheckForNickChange(PIRCSTRUC pIrcStruc, PIRC_EVENT_STRUC pIrcEventStruc)
 {
-	if(pIrcEventStruc->bNickIsSelf)
-	{
-		strcpy(pIrcStruc->IrcUser.szNick, pIrcEventStruc->szNickCommand);	
-	}
+    if(pIrcEventStruc->bNickIsSelf)
+    {
+        strcpy(pIrcStruc->IrcUser.szNick, pIrcEventStruc->szNickCommand);	
+    }
 }

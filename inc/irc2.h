@@ -25,9 +25,9 @@ extern "C" {
 #define MAX_MESSAGE_SIZE 1000
 
 typedef enum _IRC_EVENT { 
-	           IRC_EVENT_EMPTY_MESSAGE = 0,
+               IRC_EVENT_EMPTY_MESSAGE = 0,
                IRC_EVENT_DISCONNECT,
-			   IRC_EVENT_CONNECT,
+               IRC_EVENT_CONNECT,
                IRC_EVENT_JOIN, 
                IRC_EVENT_PART,  
                IRC_EVENT_QUIT,
@@ -40,7 +40,7 @@ typedef enum _IRC_EVENT {
                IRC_EVENT_NOTICE_CTCP, 
                IRC_EVENT_PRIVMSG_CTCP,
                IRC_EVENT_NUMERIC,
-			   IRC_EVENT_MAXIMUM /* Must Be Last, Not A Real Event */
+               IRC_EVENT_MAXIMUM /* Must Be Last, Not A Real Event */
 } IRC_EVENT, *PIRC_EVENT;
 
 
@@ -92,7 +92,7 @@ typedef struct _IRC_EVENT_STRUC{
     
     HIRC      hIrc;
 
-	IRC_EVENT IrcEventId;
+    IRC_EVENT IrcEventId;
     IRC_CTCP  IrcCtcpId;
     DWORD     dwNumericId;
 
@@ -108,9 +108,9 @@ typedef struct _IRC_EVENT_STRUC{
     char      szServer[MAX_HOST + 1];
 
     BOOL      bNickIsSelf;
-	BOOL      bNickCommandIsSelf;
+    BOOL      bNickCommandIsSelf;
 
-	DWORD     dwFlags;
+    DWORD     dwFlags;
     
 } IRC_EVENT_STRUC, *PIRC_EVENT_STRUC;
 
@@ -119,17 +119,17 @@ typedef void (*PIRC_EVENT_CALLBACK)(PVOID, PIRC_EVENT_STRUC);
 
 #define IRC_SetAllCallbacks(pEventCallbackList, pfnEventCallback) \
               { UINT uiIndex = 0; \
-			    for(;uiIndex < IRC_EVENT_MAXIMUM; uiIndex++) \
+                for(;uiIndex < IRC_EVENT_MAXIMUM; uiIndex++) \
                 { \
-					(pEventCallbackList)->pfnIrcEventCallback[uiIndex] = 	pfnEventCallback; \
+                    (pEventCallbackList)->pfnIrcEventCallback[uiIndex] = 	pfnEventCallback; \
                }}
 
 #define IRC_SetCallback(pEventCallbackList, pfnEventCallback, uiCallbackIndex)  \
-	         (pEventCallbackList)->pfnIrcEventCallback[uiCallbackIndex] = pfnEventCallback;
-	       
+             (pEventCallbackList)->pfnIrcEventCallback[uiCallbackIndex] = pfnEventCallback;
+           
 
 typedef struct _EVENT_CALLBACKS {
-	
+    
     PIRC_EVENT_CALLBACK pfnIrcEventCallback[IRC_EVENT_MAXIMUM];		
 
 } EVENT_CALLBACKS, *PEVENT_CALLBACKS;
@@ -156,3 +156,4 @@ void IRC_Destroy(HIRC hIrc);
 
 #endif
 
+ 

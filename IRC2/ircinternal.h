@@ -37,16 +37,16 @@
 #define IRC_IsMessageMarker(pBuffer) (pBuffer[0] == ':')
 
 #define IRC_SetIfNickIsSelf(pIrcEventStruc) \
-	if(!_stricmp(pIrcEventStruc->szNick, pIrcEventStruc->IrcUser.szNick))\
+    if(!_stricmp(pIrcEventStruc->szNick, pIrcEventStruc->IrcUser.szNick))\
     {\
-		pIrcEventStruc->bNickIsSelf = TRUE;\
-	}
+        pIrcEventStruc->bNickIsSelf = TRUE;\
+    }
 
 #define IRC_SetIfNickCommandIsSelf(pIrcEventStruc) \
-	if(!_stricmp(pIrcEventStruc->szNickCommand, pIrcEventStruc->IrcUser.szNick))\
+    if(!_stricmp(pIrcEventStruc->szNickCommand, pIrcEventStruc->IrcUser.szNick))\
     {\
-		pIrcEventStruc->bNickCommandIsSelf = TRUE;\
-	}
+        pIrcEventStruc->bNickCommandIsSelf = TRUE;\
+    }
 
 typedef struct _IRCSTRUC {
 
@@ -79,3 +79,4 @@ void IRC_Debug(char *pszFormatString, ...);
 
 #endif
 
+ 

@@ -29,19 +29,19 @@ typedef enum { IRC_EVENT_DISCONNECT, IRC_EVENT_EMPTY_MESSAGE,
                IRC_EVENT_NICK, IRC_EVENT_TOPIC, IRC_EVENT_KICK,
                IRC_EVENT_PRIVMSG, IRC_EVENT_NOTICE, IRC_EVENT_PING,
                IRC_EVENT_NOTICE_CTCP, IRC_EVENT_PRIVMSG_CTCP,
-			   IRC_EVENT_NUMERIC
+               IRC_EVENT_NUMERIC
 
 } IRC_EVENT;
 
 
 typedef enum {
 
-	           IRC_CTCP_UNKNOWN, IRC_CTCP_VERSION,
+               IRC_CTCP_UNKNOWN, IRC_CTCP_VERSION,
                IRC_CTCP_PING, IRC_CTCP_SOURCE,
-			   IRC_CTCP_USERINFO, IRC_CTCP_ERRMSG,
-			   IRC_CTCP_TIME, IRC_CTCP_DCC_SEND,
-			   IRC_CTCP_DCC_GET, IRC_CTCP_DCC_CHAT,
-			   IRC_CTCP_ACTION
+               IRC_CTCP_USERINFO, IRC_CTCP_ERRMSG,
+               IRC_CTCP_TIME, IRC_CTCP_DCC_SEND,
+               IRC_CTCP_DCC_GET, IRC_CTCP_DCC_CHAT,
+               IRC_CTCP_ACTION
 
 } IRC_CTCP;
 
@@ -65,15 +65,15 @@ typedef struct {
 
 typedef struct {
     
-	/* Handle to this Irc Instance             */
+    /* Handle to this Irc Instance             */
     HIRC      hIrc;
 
-	/* Response and Command Information        */
+    /* Response and Command Information        */
     IRC_EVENT IrcEventId;
-	IRC_CTCP  IrcCtcpId;
-	DWORD     NumericId;
+    IRC_CTCP  IrcCtcpId;
+    DWORD     NumericId;
 
-	/* Your User Information                   */
+    /* Your User Information                   */
     IRC_USER  IrcUser;
 
     /* Depends upon Pre-Command Information    */
@@ -114,3 +114,4 @@ void IRC_Destroy(HIRC hIrc);
 
 #endif
 
+ 

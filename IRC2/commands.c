@@ -37,7 +37,7 @@ HIRC IRC_ConnectToServer(PCHAR IrcServer, USHORT IrcPort, PIRC_USER pIrcUser, PE
     {
            if(pIrcStruc->DtlSocket = Dtl_Create_Client(IrcServer, IrcPort, 0))
            {
-			   memcpy(&pIrcStruc->IrcCallBacks, pIrcCallbacks, sizeof(EVENT_CALLBACKS));
+               memcpy(&pIrcStruc->IrcCallBacks, pIrcCallbacks, sizeof(EVENT_CALLBACKS));
                pIrcStruc->pContext    = pContext;
                memcpy(&pIrcStruc->IrcUser, pIrcUser, sizeof(IRC_USER));
 
@@ -278,4 +278,4 @@ IRCSTATUS IRC_SendPongMessage(HIRC hIrc, PCHAR pszServer)
    Dtl_SendSocketData(pIrcStruc->DtlSocket, szMessage, strlen(szMessage));
 
    return IRC_SUCCESS;
-}
+} 

@@ -73,7 +73,7 @@ BOOL ThreeDS_Read3dsFile_ReadMesh(PINTERNAL_3DS pInternal3ds, unsigned char *pEn
 BOOL ThreeDS_Read3dsFile_ReadVertices(PINTERNAL_3DS pInternal3ds, unsigned char *pEntire3dsFile, DWORD dwSize);
 BOOL ThreeDS_Read3dsFile_ReadPolys(PINTERNAL_3DS pInternal3ds, unsigned char *pEntire3dsFile, DWORD dwSize);
 void ThreeDS_PopulateObject(PINTERNAL_3DS pInternal3ds);
-	
+    
  /***********************************************************************
   * ThreeDS_Init
   *  
@@ -89,17 +89,17 @@ void ThreeDS_PopulateObject(PINTERNAL_3DS pInternal3ds);
 H3DS ThreeDS_Init(H3D h3D)
 {
     PINTERNAL_3DS pInternal3ds;
-	
-	pInternal3ds = LocalAlloc(LMEM_ZEROINIT, sizeof(INTERNAL_3DS));
-	
-	if(pInternal3ds)
-	{
-	    pInternal3ds->h3D = h3D;
+    
+    pInternal3ds = LocalAlloc(LMEM_ZEROINIT, sizeof(INTERNAL_3DS));
+    
+    if(pInternal3ds)
+    {
+        pInternal3ds->h3D = h3D;
         ThreeDS_Read3dsFile(pInternal3ds, "skeleton.3DS");	
-		ThreeDS_PopulateObject(pInternal3ds);
-	}
-	
-	return pInternal3ds;
+        ThreeDS_PopulateObject(pInternal3ds);
+    }
+    
+    return pInternal3ds;
 }
 
 
@@ -123,22 +123,22 @@ void ThreeDS_PopulateObject(PINTERNAL_3DS pInternal3ds)
   for(Index = 0; Index < pInternal3ds->NumberOfObjects; Index++)
   {
       pInternal3ds->ThreeDObject[Index].NumberOfVertices = pInternal3ds->MeshObjects[Index].NumberOfVertices;
-	  pInternal3ds->ThreeDObject[Index].NumberOfFaces    = pInternal3ds->MeshObjects[Index].NumberOfPolys;
-	  pInternal3ds->ThreeDObject[Index].pTriFaces = LocalAlloc(LMEM_ZEROINIT, sizeof(TRI_FACE)*pInternal3ds->ThreeDObject[Index].NumberOfFaces);
-	  pInternal3ds->ThreeDObject[Index].pVertices = LocalAlloc(LMEM_ZEROINIT, sizeof(TD_POINT)*pInternal3ds->ThreeDObject[Index].NumberOfVertices);
-	  
-	  for(Index2 = 0; Index2 < pInternal3ds->MeshObjects[Index].NumberOfVertices; Index2++)
-	  {
-	     pInternal3ds->ThreeDObject[Index].pVertices[Index2] = pInternal3ds->MeshObjects[Index].pVertices[Index2];
-	  }
-	  
-	  for(Index2 = 0; Index2 < pInternal3ds->MeshObjects[Index].NumberOfPolys; Index2++)
-	  {
-	     pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[0] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexA;
-		 pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[1] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexB;
-		 pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[2] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexC;
-		 pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].Color.PixelColor = 0xFFFFFF;
-	  }	  
+      pInternal3ds->ThreeDObject[Index].NumberOfFaces    = pInternal3ds->MeshObjects[Index].NumberOfPolys;
+      pInternal3ds->ThreeDObject[Index].pTriFaces = LocalAlloc(LMEM_ZEROINIT, sizeof(TRI_FACE)*pInternal3ds->ThreeDObject[Index].NumberOfFaces);
+      pInternal3ds->ThreeDObject[Index].pVertices = LocalAlloc(LMEM_ZEROINIT, sizeof(TD_POINT)*pInternal3ds->ThreeDObject[Index].NumberOfVertices);
+      
+      for(Index2 = 0; Index2 < pInternal3ds->MeshObjects[Index].NumberOfVertices; Index2++)
+      {
+         pInternal3ds->ThreeDObject[Index].pVertices[Index2] = pInternal3ds->MeshObjects[Index].pVertices[Index2];
+      }
+      
+      for(Index2 = 0; Index2 < pInternal3ds->MeshObjects[Index].NumberOfPolys; Index2++)
+      {
+         pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[0] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexA;
+         pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[1] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexB;
+         pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].VertexIndex[2] = pInternal3ds->MeshObjects[Index].pPolyFaces[Index2].IndexC;
+         pInternal3ds->ThreeDObject[Index].pTriFaces[Index2].Color.PixelColor = 0xFFFFFF;
+      }	  
   }
   
 }
@@ -176,35 +176,35 @@ void ThreeDS_Close(H3DS h3Ds)
 BOOL ThreeDS_Read3dsFile(PINTERNAL_3DS pInternal3ds, unsigned char *pszFileName)
 {
     HANDLE hFile;
-	DWORD BytesRead;
-	BOOL bComplete;
-	unsigned char *p3DsFileContents;
-	DWORD FileSize;
-	
-	bComplete = FALSE;
-	
-	hFile = CreateFile(pszFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	
-	if(hFile != NULL && hFile != INVALID_HANDLE_VALUE)
-	{
-	    FileSize = GetFileSize(hFile, NULL);
-		
-	    if(FileSize != 0)
-		{
-			p3DsFileContents = LocalAlloc(LMEM_ZEROINIT, FileSize);
-			if(p3DsFileContents)
-			{
-			   if(ReadFile(hFile, p3DsFileContents, FileSize, &BytesRead, NULL))
-			   {
-					bComplete = ThreeDS_Read3dsFile_ReadMain(pInternal3ds, p3DsFileContents, BytesRead);
-			   }
-			}
-		}	    
-	
-	    CloseHandle(hFile);    
-	}
-	
-	return bComplete;
+    DWORD BytesRead;
+    BOOL bComplete;
+    unsigned char *p3DsFileContents;
+    DWORD FileSize;
+    
+    bComplete = FALSE;
+    
+    hFile = CreateFile(pszFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    
+    if(hFile != NULL && hFile != INVALID_HANDLE_VALUE)
+    {
+        FileSize = GetFileSize(hFile, NULL);
+        
+        if(FileSize != 0)
+        {
+            p3DsFileContents = LocalAlloc(LMEM_ZEROINIT, FileSize);
+            if(p3DsFileContents)
+            {
+               if(ReadFile(hFile, p3DsFileContents, FileSize, &BytesRead, NULL))
+               {
+                    bComplete = ThreeDS_Read3dsFile_ReadMain(pInternal3ds, p3DsFileContents, BytesRead);
+               }
+            }
+        }	    
+    
+        CloseHandle(hFile);    
+    }
+    
+    return bComplete;
 }
 
  /***********************************************************************
@@ -234,26 +234,26 @@ BOOL ThreeDS_Draw(H3DS h3Ds)
 #if 0   
    for(IndexObject = 0; IndexObject < pInternal3ds->NumberOfObjects; IndexObject++)
    {
-		for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfVertices; IndexVertice++)
-		{	
-		    TdPixel.Point = pInternal3ds->MeshObjects[IndexObject].pVertices[IndexVertice];
-			ThreeD_PlotPixel(pInternal3ds->h3D, &TdPixel, &WorldView);
-		}
+        for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfVertices; IndexVertice++)
+        {	
+            TdPixel.Point = pInternal3ds->MeshObjects[IndexObject].pVertices[IndexVertice];
+            ThreeD_PlotPixel(pInternal3ds->h3D, &TdPixel, &WorldView);
+        }
    }
 #endif
    
    for(IndexObject = 0; IndexObject < pInternal3ds->NumberOfObjects; IndexObject++)
    {
-		for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfPolys; IndexVertice++)
-		{	
-			IndexA = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexA;
-			IndexB = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexB;
-			IndexC = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexC;
-			
-			ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexA], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexB], &TdPixel.Color, &WorldView);
-			ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexB], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexC], &TdPixel.Color, &WorldView);
-			ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexC], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexA], &TdPixel.Color, &WorldView);
-		}
+        for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfPolys; IndexVertice++)
+        {	
+            IndexA = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexA;
+            IndexB = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexB;
+            IndexC = pInternal3ds->MeshObjects[IndexObject].pPolyFaces[IndexVertice].IndexC;
+            
+            ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexA], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexB], &TdPixel.Color, &WorldView);
+            ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexB], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexC], &TdPixel.Color, &WorldView);
+            ThreeD_DrawLine(pInternal3ds->h3D, &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexC], &pInternal3ds->MeshObjects[IndexObject].pVertices[IndexA], &TdPixel.Color, &WorldView);
+        }
    }
    
    return TRUE;
@@ -283,11 +283,11 @@ BOOL ThreeDS_Draw2(H3DS h3Ds)
 
    for(IndexObject = 0; IndexObject < pInternal3ds->NumberOfObjects; IndexObject++)
    {
-		for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfVertices; IndexVertice++)
-		{	
-		    TdPixel.Point = pInternal3ds->MeshObjects[IndexObject].pVertices[IndexVertice];
-			ThreeD_PlotPixel(pInternal3ds->h3D, &TdPixel, &WorldView);
-		}
+        for(IndexVertice = 0; IndexVertice < pInternal3ds->MeshObjects[IndexObject].NumberOfVertices; IndexVertice++)
+        {	
+            TdPixel.Point = pInternal3ds->MeshObjects[IndexObject].pVertices[IndexVertice];
+            ThreeD_PlotPixel(pInternal3ds->h3D, &TdPixel, &WorldView);
+        }
    }
 
    return TRUE;
@@ -393,22 +393,22 @@ BOOL ThreeDS_Read3dsFile_ReadMain(PINTERNAL_3DS pInternal3ds, unsigned char *pEn
    if(pChunkHeader->ChunkID == CHUNK_MAIN)
    {
        pEntire3dsFile += sizeof(CHUNK_HEADER);
-	   pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
-	   
+       pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
+       
        while(pEntire3dsFile < (pEntire3dsFile + dwSize) && bFoundEdit3Ds == FALSE)
-	   {
-	      if(pChunkHeader->ChunkID == CHUNK_EDIT3DS)
-		  {
-		      bFoundEdit3Ds = TRUE;
-			  bReadComplete = ThreeDS_Read3dsFile_Read3DsChunk(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
-		  }
-		  else
-		  {
-			  ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
-			  pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
-			  pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
-		  }
-	   }
+       {
+          if(pChunkHeader->ChunkID == CHUNK_EDIT3DS)
+          {
+              bFoundEdit3Ds = TRUE;
+              bReadComplete = ThreeDS_Read3dsFile_Read3DsChunk(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
+          }
+          else
+          {
+              ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
+              pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
+              pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
+          }
+       }
    }  
    
    return bReadComplete;
@@ -439,22 +439,22 @@ BOOL ThreeDS_Read3dsFile_Read3DsChunk(PINTERNAL_3DS pInternal3ds, unsigned char 
    unsigned char *pEndOfBuffer;
    
    pEndOfBuffer = pEntire3dsFile + dwSize;
-	
+    
    bReadComplete = FALSE;
    pEntire3dsFile += sizeof(CHUNK_HEADER);
    pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
-	   
+       
    while(pChunkHeader->ChunkLength && pEntire3dsFile < pEndOfBuffer)
    {
-	  ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
-	  
-	  if(pChunkHeader->ChunkID == CHUNK_OBJECT)
-	  {
-	      bReadComplete = ThreeDS_Read3dsFile_ReadObject(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
-	  }
-	  
-	  pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
-	  pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
+      ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
+      
+      if(pChunkHeader->ChunkID == CHUNK_OBJECT)
+      {
+          bReadComplete = ThreeDS_Read3dsFile_ReadObject(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
+      }
+      
+      pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
+      pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
    }
    
    return bReadComplete;
@@ -487,21 +487,21 @@ BOOL ThreeDS_Read3dsFile_ReadObject(PINTERNAL_3DS pInternal3ds, unsigned char *p
    
    ThreeD_Debug("Object (%s)\n", szObjectName);
    pEntire3dsFile = pEntire3dsFile + strlen(szObjectName) + 1;
-	
+    
    bReadComplete = FALSE;
    pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
-		
+        
    while(pChunkHeader->ChunkLength && pEntire3dsFile < pEndOfBuffer)
    {
-	  ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
-	  
-	  if(pChunkHeader->ChunkID == CHUNK_MESH)
-	  {
-	      bReadComplete = ThreeDS_Read3dsFile_ReadMesh(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
-	  }
-	  
-	  pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
-	  pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
+      ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
+      
+      if(pChunkHeader->ChunkID == CHUNK_MESH)
+      {
+          bReadComplete = ThreeDS_Read3dsFile_ReadMesh(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
+      }
+      
+      pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
+      pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
    }
    
    return bReadComplete;
@@ -530,28 +530,28 @@ BOOL ThreeDS_Read3dsFile_ReadMesh(PINTERNAL_3DS pInternal3ds, unsigned char *pEn
 
    pEndOfBuffer = pEntire3dsFile + dwSize;
    pEntire3dsFile = pEntire3dsFile + sizeof(CHUNK_HEADER);
-	
+    
    bReadComplete = FALSE;
    pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
-		
+        
    while(pChunkHeader->ChunkLength && pEntire3dsFile < pEndOfBuffer)
    {
-	  ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
-	  
-	  if(pChunkHeader->ChunkID == CHUNK_VERTICES)
-	  {
-	      bReadComplete = ThreeDS_Read3dsFile_ReadVertices(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
-	  }
-	  else
-	  {
-	     if(pChunkHeader->ChunkID == CHUNK_FACES)
-		 {
-		     bReadComplete = ThreeDS_Read3dsFile_ReadPolys(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
-		 }
-	  }
-	  
-	  pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
-	  pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
+      ThreeD_Debug("Chunk Id 0x%0x, Chunk Size %i\n", pChunkHeader->ChunkID, pChunkHeader->ChunkLength);
+      
+      if(pChunkHeader->ChunkID == CHUNK_VERTICES)
+      {
+          bReadComplete = ThreeDS_Read3dsFile_ReadVertices(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
+      }
+      else
+      {
+         if(pChunkHeader->ChunkID == CHUNK_FACES)
+         {
+             bReadComplete = ThreeDS_Read3dsFile_ReadPolys(pInternal3ds, pEntire3dsFile, pChunkHeader->ChunkLength);
+         }
+      }
+      
+      pEntire3dsFile = pEntire3dsFile + pChunkHeader->ChunkLength;
+      pChunkHeader = (PCHUNK_HEADER)pEntire3dsFile;
    }
    
    pInternal3ds->NumberOfObjects++;
@@ -593,7 +593,7 @@ BOOL ThreeDS_Read3dsFile_ReadVertices(PINTERNAL_3DS pInternal3ds, unsigned char 
    
    pEntire3dsFile += sizeof(unsigned short);
    ThreeD_Debug("Vertices: %i\n", NumberOfVertices);
-	
+    
    bReadComplete = TRUE;
    
    pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].NumberOfVertices = NumberOfVertices;
@@ -602,26 +602,26 @@ BOOL ThreeDS_Read3dsFile_ReadVertices(PINTERNAL_3DS pInternal3ds, unsigned char 
    if(pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices)
    {
        Index = 0;
-	   while(NumberOfVertices > 0)
-	   {
-	      X = *((float *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(float);
-		  
-		  Y = *((float *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(float);
-		  
-		  Z = *((float *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(float);
-		  
-		 // ThreeD_Debug("(%f, %f, %f)\n", X, Y, Z);
-		  
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].x = X;
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].y = Y;
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].z = Z;
-		  Index++;
-		  
-		  NumberOfVertices--;
-	   }
+       while(NumberOfVertices > 0)
+       {
+          X = *((float *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(float);
+          
+          Y = *((float *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(float);
+          
+          Z = *((float *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(float);
+          
+         // ThreeD_Debug("(%f, %f, %f)\n", X, Y, Z);
+          
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].x = X;
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].y = Y;
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pVertices[Index].z = Z;
+          Index++;
+          
+          NumberOfVertices--;
+       }
     }
    
    return bReadComplete;
@@ -658,7 +658,7 @@ BOOL ThreeDS_Read3dsFile_ReadPolys(PINTERNAL_3DS pInternal3ds, unsigned char *pE
    
    pEntire3dsFile += sizeof(unsigned short);
    ThreeD_Debug("Polys: %i\n", NumberOfPolys);
-	
+    
    bReadComplete = TRUE;
    
    pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].NumberOfPolys = NumberOfPolys;
@@ -668,26 +668,27 @@ BOOL ThreeDS_Read3dsFile_ReadPolys(PINTERNAL_3DS pInternal3ds, unsigned char *pE
    if( pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces)
    {
        Index = 0;
-	   while(NumberOfPolys > 0)
-	   {
-	      pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexA = *((unsigned short *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
-		  
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexB = *((unsigned short *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
-		  
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexC = *((unsigned short *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
-		  
-		  pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].FaceInfo = *((unsigned short *)pEntire3dsFile) ;
-		  pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
-		  
-		  //ThreeD_Debug("(%i, %i, %i) Info(%i)\n", pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexA, pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexB,pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexC, pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].FaceInfo);
-		  
-		  Index++;
-		  NumberOfPolys--;
-	   }
+       while(NumberOfPolys > 0)
+       {
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexA = *((unsigned short *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
+          
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexB = *((unsigned short *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
+          
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexC = *((unsigned short *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
+          
+          pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].FaceInfo = *((unsigned short *)pEntire3dsFile) ;
+          pEntire3dsFile = pEntire3dsFile + sizeof(unsigned short);
+          
+          //ThreeD_Debug("(%i, %i, %i) Info(%i)\n", pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexA, pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexB,pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].IndexC, pInternal3ds->MeshObjects[pInternal3ds->NumberOfObjects].pPolyFaces[Index].FaceInfo);
+          
+          Index++;
+          NumberOfPolys--;
+       }
     }
    
    return bReadComplete;
 }
+ 

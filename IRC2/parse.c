@@ -36,31 +36,31 @@ typedef struct _EVENT_PARSE_DATA {
  */
 #define IRC_CopyNick(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szNick, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_NICK_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_NICK_VALID;
 
 #define IRC_CopyHostDetails(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szNickHostDetails, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_NICK_HOST_DETAILS_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_NICK_HOST_DETAILS_VALID;
 
 #define IRC_CopyChannel(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szChannel, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_CHANNEL_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_CHANNEL_VALID;
 
 #define IRC_CopyText(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szText, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_TEXT_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_TEXT_VALID;
 
 #define IRC_CopyChannelCommand(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szChannelCommand, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_CHANNEL_COMMAND_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_CHANNEL_COMMAND_VALID;
 
 #define IRC_CopyNickCommand(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szNickCommand, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_NICK_COMMAND_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_NICK_COMMAND_VALID;
 
 #define IRC_CopyServer(pIrcEventStruc, pBuffer, uiSize) \
             strncpy(pIrcEventStruc->szServer, pBuffer, uiSize); \
-			pIrcEventStruc->dwFlags |= FLAG_SERVER_VALID;
+            pIrcEventStruc->dwFlags |= FLAG_SERVER_VALID;
 
 
 /*
@@ -94,14 +94,14 @@ EVENT_PARSE_DATA g_EventParseData[] =
 {
     {"PRIVMSG", NULL, IRC_EVENT_PRIVMSG,       IRC_ParsePrivMessage   },
     {"JOIN",    NULL, IRC_EVENT_JOIN,          IRC_ExtractJoinMessage },
-	{"QUIT",    NULL, IRC_EVENT_QUIT,          IRC_ExtractQuitMessage },
-	{"PING",    NULL, IRC_EVENT_EMPTY_MESSAGE, IRC_ParsePingMessage   },
-	{"NICK",    NULL, IRC_EVENT_NICK,          IRC_ExtractNickMessage },
-	{"PART",    NULL, IRC_EVENT_PART,          IRC_ExtractPartMessage },
-	{"TOPIC",   NULL, IRC_EVENT_TOPIC,         IRC_ExtractTopicMessage },
-	{"KICK",    NULL, IRC_EVENT_KICK,          IRC_ExtractKickMessage },
-	{"NOTICE",  NULL, IRC_EVENT_NOTICE,        IRC_ParseNoticeMessage },
-	{NULL,      IRC_EventIsNumericId, IRC_EVENT_NUMERIC, IRC_ExtractNumericMessage } 
+    {"QUIT",    NULL, IRC_EVENT_QUIT,          IRC_ExtractQuitMessage },
+    {"PING",    NULL, IRC_EVENT_EMPTY_MESSAGE, IRC_ParsePingMessage   },
+    {"NICK",    NULL, IRC_EVENT_NICK,          IRC_ExtractNickMessage },
+    {"PART",    NULL, IRC_EVENT_PART,          IRC_ExtractPartMessage },
+    {"TOPIC",   NULL, IRC_EVENT_TOPIC,         IRC_ExtractTopicMessage },
+    {"KICK",    NULL, IRC_EVENT_KICK,          IRC_ExtractKickMessage },
+    {"NOTICE",  NULL, IRC_EVENT_NOTICE,        IRC_ParseNoticeMessage },
+    {NULL,      IRC_EventIsNumericId, IRC_EVENT_NUMERIC, IRC_ExtractNumericMessage } 
 };
 
 
@@ -171,24 +171,24 @@ UINT IRC_ExtractNickOrChannel(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVEN
        if(pBuffer[uiIndex + 1] == '#' || pBuffer[uiIndex + 1] == '&')
        {
            IRC_FindNextWhiteSpace(pBuffer, uiEndOfMessageIndex, uiIndex);
-		   IRC_CopyChannel(pIrcEventStruc, pBuffer + 1, uiIndex - 1);
-		   IRC_Debug("IRC_ExtractNickOrChannel - Channel = %s\r\n", pIrcEventStruc->szChannel);
+           IRC_CopyChannel(pIrcEventStruc, pBuffer + 1, uiIndex - 1);
+           IRC_Debug("IRC_ExtractNickOrChannel - Channel = %s\r\n", pIrcEventStruc->szChannel);
        }
        else
        {
            IRC_FindEndOfNick(pBuffer, uiEndOfMessageIndex, uiIndex);
-		   IRC_CopyNick(pIrcEventStruc, pBuffer + 1, uiIndex - 1);
+           IRC_CopyNick(pIrcEventStruc, pBuffer + 1, uiIndex - 1);
            
-		   IRC_Debug("IRC_ExtractNickOrChannel - Nick = %s\r\n", pIrcEventStruc->szNick);
+           IRC_Debug("IRC_ExtractNickOrChannel - Nick = %s\r\n", pIrcEventStruc->szNick);
 
            if(pBuffer[uiIndex] == '!')
            {
                uiHostStartIndex = uiIndex + 1;
 
                IRC_FindNextWhiteSpace(pBuffer, uiEndOfMessageIndex, uiIndex);
-		       IRC_CopyHostDetails(pIrcEventStruc, pBuffer + uiHostStartIndex, uiIndex - uiHostStartIndex);
+               IRC_CopyHostDetails(pIrcEventStruc, pBuffer + uiHostStartIndex, uiIndex - uiHostStartIndex);
                
-			   IRC_Debug("IRC_ExtractNickOrChannel - Host = %s\r\n", pIrcEventStruc->szNickHostDetails);
+               IRC_Debug("IRC_ExtractNickOrChannel - Host = %s\r\n", pIrcEventStruc->szNickHostDetails);
            }
        }
    }
@@ -266,8 +266,8 @@ void IRC_ExtractEvent(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_STRUC 
 void IRC_ParsePrivMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_STRUC pIrcEventStruc)
 {
     IRC_Debug("IRC_ParsePrivMessage - Enter\r\n");
-	IRC_ExtractPrivMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc);
-	IRC_ExtractCtcpMsgMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc);
+    IRC_ExtractPrivMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc);
+    IRC_ExtractCtcpMsgMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc);
 }
 
 
@@ -290,14 +290,14 @@ BOOL IRC_EventIsNumericId(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_ST
     IRC_Debug("IRC_EventIsNumericId - Enter\r\n");
 
     if(uiEndOfMessageIndex == 2)
-	{
+    {
        if(isdigit(*pBuffer) && isdigit(*(pBuffer + 1)) && isdigit(*(pBuffer + 2)))
        {
            bEventIsNumericId = TRUE;
            pIrcEventStruc->dwNumericId = (((*pBuffer) - '0')*100) + (((*pBuffer + 1) - '0')*10) + ((*pBuffer + 2) - '0');
-		   IRC_Debug("IRC_EventIsNumericId - %i\r\n",  pIrcEventStruc->dwNumericId);
+           IRC_Debug("IRC_EventIsNumericId - %i\r\n",  pIrcEventStruc->dwNumericId);
        }
-	}
+    }
 
     return bEventIsNumericId;
 }
@@ -322,10 +322,10 @@ void IRC_ExtractCtcpNoticeMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_
    IRC_Debug("IRC_ExtractCtcpNoticeMessage - Enter\r\n");
    if(pIrcEventStruc->szText[0] == 1)
    {
-	   uiIndex = 1;
+       uiIndex = 1;
        pIrcEventStruc->IrcEventId = IRC_EVENT_NOTICE_CTCP;
 
-	   for(uiIndex = 1; pIrcEventStruc->szText[uiIndex] != 1 && pIrcEventStruc->szText[uiIndex] != ' '; uiIndex++) ;
+       for(uiIndex = 1; pIrcEventStruc->szText[uiIndex] != 1 && pIrcEventStruc->szText[uiIndex] != ' '; uiIndex++) ;
 
 /*       if(!strncmp(pIrcEventStruc->Text + 1, "DCC", Index - 1))
        {
@@ -356,7 +356,7 @@ void IRC_ExtractCtcpMsgMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVE
    IRC_Debug("IRC_ExtractCtcpMsgMessage - Enter\r\n");
    if(pIrcEventStruc->szText[0] == 1)
    {
-	   uiIndex = 1;
+       uiIndex = 1;
        pIrcEventStruc->IrcEventId = IRC_EVENT_PRIVMSG_CTCP;
 
        for(uiIndex = 1; pIrcEventStruc->szText[uiIndex] != 1 && pIrcEventStruc->szText[uiIndex] != ' '; uiIndex++) ;
@@ -422,13 +422,13 @@ UINT IRC_GenericNameExtract(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_
 
    if(IRC_IsIrcChannelName(pBuffer))
    {
-	   IRC_CopyChannelCommand(pIrcEventStruc, pBuffer, uiIndex);
-	   IRC_Debug("IRC_GenericNameExtract - Channel = %s\r\n", pIrcEventStruc->szChannelCommand);
+       IRC_CopyChannelCommand(pIrcEventStruc, pBuffer, uiIndex);
+       IRC_Debug("IRC_GenericNameExtract - Channel = %s\r\n", pIrcEventStruc->szChannelCommand);
    }
    else
    {
-	   IRC_CopyNickCommand(pIrcEventStruc, pBuffer, uiIndex);
-	   IRC_Debug("IRC_GenericNameExtract - Nick = %s\r\n", pIrcEventStruc->szNickCommand);
+       IRC_CopyNickCommand(pIrcEventStruc, pBuffer, uiIndex);
+       IRC_Debug("IRC_GenericNameExtract - Nick = %s\r\n", pIrcEventStruc->szNickCommand);
    }
 
    return uiIndex;
@@ -511,35 +511,35 @@ void IRC_ExtractNickMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_
  *******************************************************************************/
 void IRC_GenericExtractMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_STRUC pIrcEventStruc, DWORD dwFlags)
 {
-	UINT uiIndex;
+    UINT uiIndex;
    
-	if(IRC_IsMessageMarker(pBuffer))
-	{
-		IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
-		IRC_Debug("IRC_GenericExtractMessage - Text = %s\r\n", pIrcEventStruc->szText);
-	}
-	else
-	{
-		uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
+    if(IRC_IsMessageMarker(pBuffer))
+    {
+        IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
+        IRC_Debug("IRC_GenericExtractMessage - Text = %s\r\n", pIrcEventStruc->szText);
+    }
+    else
+    {
+        uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
 
-		if(dwFlags & FLAG_GENERIC_EXTRACT_CHANNEL_AND_NICK)
-		{
-			uiIndex += IRC_GenericNameExtract(pBuffer+uiIndex, uiEndOfMessageIndex-uiIndex, pIrcEventStruc) + 1;
-		}
+        if(dwFlags & FLAG_GENERIC_EXTRACT_CHANNEL_AND_NICK)
+        {
+            uiIndex += IRC_GenericNameExtract(pBuffer+uiIndex, uiEndOfMessageIndex-uiIndex, pIrcEventStruc) + 1;
+        }
 
-		if(uiIndex < uiEndOfMessageIndex)
-		{
-			if(IRC_IsMessageMarker((pBuffer + uiIndex)))
-			{
-				IRC_CopyText(pIrcEventStruc, pBuffer + uiIndex + 1, uiEndOfMessageIndex - uiIndex - 1);
-			}
-			else
-			{
+        if(uiIndex < uiEndOfMessageIndex)
+        {
+            if(IRC_IsMessageMarker((pBuffer + uiIndex)))
+            {
+                IRC_CopyText(pIrcEventStruc, pBuffer + uiIndex + 1, uiEndOfMessageIndex - uiIndex - 1);
+            }
+            else
+            {
                 IRC_CopyText(pIrcEventStruc, pBuffer + uiIndex, uiEndOfMessageIndex - uiIndex);
-			}
-			IRC_Debug("IRC_GenericExtractMessage - Text = %s\r\n", pIrcEventStruc->szText);
-		}
-	}
+            }
+            IRC_Debug("IRC_GenericExtractMessage - Text = %s\r\n", pIrcEventStruc->szText);
+        }
+    }
 }
 
 /*******************************************************************************
@@ -595,9 +595,9 @@ void IRC_ExtractNoticeMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVEN
 void IRC_ExtractKickMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVENT_STRUC pIrcEventStruc)
 {
     IRC_Debug("IRC_ExtractKickMessage - Enter\r\n");
-	IRC_GenericExtractMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc, FLAG_GENERIC_EXTRACT_CHANNEL_AND_NICK);
+    IRC_GenericExtractMessage(pBuffer, uiEndOfMessageIndex, pIrcEventStruc, FLAG_GENERIC_EXTRACT_CHANNEL_AND_NICK);
 }
-	
+    
 
 
 
@@ -702,53 +702,53 @@ void IRC_ExtractNumericMessage(PCHAR pBuffer, UINT uiEndOfMessageIndex, PIRC_EVE
    
    if(uiIndex < uiEndOfMessageIndex)
    {
-	   uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
+       uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
 
-	   if(uiIndex < uiEndOfMessageIndex)
-	   {
-		   pBuffer += uiIndex;
-		   uiEndOfMessageIndex -= uiIndex;
+       if(uiIndex < uiEndOfMessageIndex)
+       {
+           pBuffer += uiIndex;
+           uiEndOfMessageIndex -= uiIndex;
 
-		   if(IRC_IsMessageMarker(pBuffer))
-		   {
-			   IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
-		   }
-		   else
-		   {
-			   uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
+           if(IRC_IsMessageMarker(pBuffer))
+           {
+               IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
+           }
+           else
+           {
+               uiIndex = IRC_GenericNameExtract(pBuffer, uiEndOfMessageIndex, pIrcEventStruc) + 1;
 
-			   if(uiIndex < uiEndOfMessageIndex)
-			   {
-				   pBuffer += uiIndex;
-				   uiEndOfMessageIndex -= uiIndex;
+               if(uiIndex < uiEndOfMessageIndex)
+               {
+                   pBuffer += uiIndex;
+                   uiEndOfMessageIndex -= uiIndex;
 
-				   if(IRC_IsMessageMarker(pBuffer))
-				   {
-					   IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
-				   }
-				   else
-				   {
-					   IRC_CopyText(pIrcEventStruc, pBuffer, uiEndOfMessageIndex);
-				   }
-				   IRC_Debug("IRC_ExtractNumericMessage - Text = %s\r\n", pIrcEventStruc->szText);
-			   }
-		   }
-	   }
+                   if(IRC_IsMessageMarker(pBuffer))
+                   {
+                       IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
+                   }
+                   else
+                   {
+                       IRC_CopyText(pIrcEventStruc, pBuffer, uiEndOfMessageIndex);
+                   }
+                   IRC_Debug("IRC_ExtractNumericMessage - Text = %s\r\n", pIrcEventStruc->szText);
+               }
+           }
+       }
    }
    else
    {
-	   if(IRC_IsMessageMarker(pBuffer))
-	   {
-		   IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
-	   }
-	   else
-	   {
-		   IRC_CopyText(pIrcEventStruc, pBuffer, uiEndOfMessageIndex);
-	   }
-	   IRC_Debug("IRC_ExtractNumericMessage - Text = %s\r\n", pIrcEventStruc->szText);
+       if(IRC_IsMessageMarker(pBuffer))
+       {
+           IRC_CopyText(pIrcEventStruc, pBuffer + 1, uiEndOfMessageIndex - 1);
+       }
+       else
+       {
+           IRC_CopyText(pIrcEventStruc, pBuffer, uiEndOfMessageIndex);
+       }
+       IRC_Debug("IRC_ExtractNumericMessage - Text = %s\r\n", pIrcEventStruc->szText);
    }
 }
 
 
-
+ 
 

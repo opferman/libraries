@@ -39,13 +39,13 @@
 typedef union _PIXEL_COLOR {
 
      struct {
-				unsigned char Blue;
-				unsigned char Green;
-				unsigned char Red;
+                unsigned char Blue;
+                unsigned char Green;
+                unsigned char Red;
                 unsigned char Alpha;				
-	 } Color;
-	 
-	 DWORD PixelColor;
+     } Color;
+     
+     DWORD PixelColor;
 
 } PIXEL_COLOR, *PPIXEL_COLOR;
 
@@ -121,7 +121,7 @@ typedef struct _THREE_D_OBJECT {
 typedef enum _TD_PIXEL_STATUS
 {
     TdPixelPlotted = 0,
-	TdPixelOffScreen,
+    TdPixelOffScreen,
     TdPixelHidden	
 
 } TD_PIXEL_STATUS, *PTD_PIXEL_STATUS;
@@ -158,3 +158,4 @@ void ThreeD_SetAspectRatio(H3D h3D, double AspectRatio);
  
 #endif
 
+  

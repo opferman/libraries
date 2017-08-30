@@ -23,7 +23,7 @@ typedef struct {
     HANDLE                hThread;
     DWORD                 ThreadID;
     IRC_USER              IrcUser;
-	char                  PendingNick[30];
+    char                  PendingNick[30];
 
 } IRCSTRUC, *PIRCSTRUC;
 
@@ -908,13 +908,13 @@ IRCSTATUS IRC_NoticeNick(HIRC hIrc, PCHAR Nick, PCHAR Text)
    {
       Index2 = 0;
       while(Text[Index] && Text[Index] != '\n' && Text[Index] != '\r')
-	  {
-	     MText[Index2] = Text[Index];
-		 Index2++;
+      {
+         MText[Index2] = Text[Index];
+         Index2++;
          Index++;
-	  }
+      }
 
-	  MText[Index2] = 0;
+      MText[Index2] = 0;
 
 
       sprintf(Message, "NOTICE %s :%s\r\n", Nick, MText);
@@ -995,14 +995,14 @@ IRCSTATUS IRC_MsgNick(HIRC hIrc, PCHAR Nick, PCHAR Text)
 
    while(Text[Index])
    {
-	  Index2 = 0;
+      Index2 = 0;
 
       while(Text[Index] && Text[Index] != '\n' && Text[Index] != '\r')
-	  {
+      {
          TextMessage[Index2] = Text[Index];
          Index++;
-		 Index2++;
-	  }
+         Index2++;
+      }
 
 
       TextMessage[Index2] = 0;
@@ -1207,3 +1207,4 @@ void IRC_ExtractNumericMessage(PCHAR pBuffer, UINT EndOfMessageIndex, PIRC_EVENT
 
 
 
+ 

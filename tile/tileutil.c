@@ -29,27 +29,27 @@
  ***********************************************************************/
 void WINAPI Tile_SetCurrentTileLocation(HTILE hTile, PTILE_LOCATION pTileLocation)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
 
-	if(pTileLocation->dwCurrentTileX < pTileEng->dwResolutionX)
-	{
-		pTileEng->MainSpriteLocation.dwCurrentTileX = pTileLocation->dwCurrentTileX;
-	}
+    if(pTileLocation->dwCurrentTileX < pTileEng->dwResolutionX)
+    {
+        pTileEng->MainSpriteLocation.dwCurrentTileX = pTileLocation->dwCurrentTileX;
+    }
 
-	if(pTileLocation->dwCurrentTileY < pTileEng->dwResolutionY)
-	{
-		pTileEng->MainSpriteLocation.dwCurrentTileY = pTileLocation->dwCurrentTileY;
-	}
+    if(pTileLocation->dwCurrentTileY < pTileEng->dwResolutionY)
+    {
+        pTileEng->MainSpriteLocation.dwCurrentTileY = pTileLocation->dwCurrentTileY;
+    }
 
-	if(pTileLocation->dwCurrentTileIndexX < pTileEng->dwTileSizeX)
-	{
-		pTileEng->MainSpriteLocation.dwCurrentTileIndexX = pTileLocation->dwCurrentTileIndexX;
-	}
+    if(pTileLocation->dwCurrentTileIndexX < pTileEng->dwTileSizeX)
+    {
+        pTileEng->MainSpriteLocation.dwCurrentTileIndexX = pTileLocation->dwCurrentTileIndexX;
+    }
 
-	if(pTileLocation->dwCurrentTileIndexY < pTileEng->dwTileSizeY)
-	{
-		pTileEng->MainSpriteLocation.dwCurrentTileIndexY = pTileLocation->dwCurrentTileIndexY;
-	}
+    if(pTileLocation->dwCurrentTileIndexY < pTileEng->dwTileSizeY)
+    {
+        pTileEng->MainSpriteLocation.dwCurrentTileIndexY = pTileLocation->dwCurrentTileIndexY;
+    }
 }
 
 
@@ -65,13 +65,13 @@ void WINAPI Tile_SetCurrentTileLocation(HTILE hTile, PTILE_LOCATION pTileLocatio
  ***********************************************************************/
 void WINAPI Tile_GetCurrentTileLocation(HTILE hTile, PTILE_LOCATION pTileLocation)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
 
-	pTileLocation->dwCurrentTileX = pTileEng->MainSpriteLocation.dwCurrentTileX;
-	pTileLocation->dwCurrentTileY = pTileEng->MainSpriteLocation.dwCurrentTileY;
+    pTileLocation->dwCurrentTileX = pTileEng->MainSpriteLocation.dwCurrentTileX;
+    pTileLocation->dwCurrentTileY = pTileEng->MainSpriteLocation.dwCurrentTileY;
 
-	pTileLocation->dwCurrentTileIndexX = pTileEng->MainSpriteLocation.dwCurrentTileIndexX;
-	pTileLocation->dwCurrentTileIndexY = pTileEng->MainSpriteLocation.dwCurrentTileIndexY;
+    pTileLocation->dwCurrentTileIndexX = pTileEng->MainSpriteLocation.dwCurrentTileIndexX;
+    pTileLocation->dwCurrentTileIndexY = pTileEng->MainSpriteLocation.dwCurrentTileIndexY;
 }
 
 
@@ -88,8 +88,8 @@ void WINAPI TileSprite_GetCurrentTileLocation(HTILESPRITE hTileSprite, UINT *pTi
 {
     PTILE_SPRITE_ENG pTileSpriteEng = (PTILE_SPRITE_ENG)hTileSprite;
 
-	*pTileX = pTileSpriteEng->SpriteLocation.dwCurrentTileX;
-	*pTileY = pTileSpriteEng->SpriteLocation.dwCurrentTileY;
+    *pTileX = pTileSpriteEng->SpriteLocation.dwCurrentTileX;
+    *pTileY = pTileSpriteEng->SpriteLocation.dwCurrentTileY;
 }
 
 
@@ -104,9 +104,9 @@ void WINAPI TileSprite_GetCurrentTileLocation(HTILESPRITE hTileSprite, UINT *pTi
  ***********************************************************************/
 void WINAPI Tile_GetCurrentScreenLocation(HTILE hTile, PTILE_SCREEN_POSITION pTileScreenPosition)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
 
-	*pTileScreenPosition = pTileEng->TileScreenPosition;
+    *pTileScreenPosition = pTileEng->TileScreenPosition;
 }
 
 
@@ -121,9 +121,9 @@ void WINAPI Tile_GetCurrentScreenLocation(HTILE hTile, PTILE_SCREEN_POSITION pTi
  ***********************************************************************/
 void WINAPI Tile_Modify(HTILE hTile, UINT TileX, UINT TileY, PTILEINFO pNewTileInfo)
 {
-	PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
+    PTILE_ENGINE pTileEng = (PTILE_ENGINE)hTile;
 
-	pTileEng->pTileMap[TileX + pTileEng->dwResolutionX*TileY] = *pNewTileInfo;
+    pTileEng->pTileMap[TileX + pTileEng->dwResolutionX*TileY] = *pNewTileInfo;
 }
 
 
@@ -138,27 +138,27 @@ void WINAPI Tile_Modify(HTILE hTile, UINT TileX, UINT TileY, PTILEINFO pNewTileI
  ***********************************************************************/
 void Tile_CreateTileBox(PTILE_ENGINE pTileEng, PSPRITE_LOCATION_DATA pSpriteLocationData, PTILE_BOX pTileBox)
 {
-	pTileBox->dwLeftTile = pSpriteLocationData->dwCurrentTileX;
-	pTileBox->dwTopTile  = pSpriteLocationData->dwCurrentTileY;
-	pTileBox->dwPosLeftX = pSpriteLocationData->dwCurrentTileIndexX;
-	pTileBox->dwPosTopY  = pSpriteLocationData->dwCurrentTileIndexY;
+    pTileBox->dwLeftTile = pSpriteLocationData->dwCurrentTileX;
+    pTileBox->dwTopTile  = pSpriteLocationData->dwCurrentTileY;
+    pTileBox->dwPosLeftX = pSpriteLocationData->dwCurrentTileIndexX;
+    pTileBox->dwPosTopY  = pSpriteLocationData->dwCurrentTileIndexY;
 
-	pTileBox->dwRightTile  = pTileBox->dwLeftTile;
+    pTileBox->dwRightTile  = pTileBox->dwLeftTile;
     pTileBox->dwBottomTile = pTileBox->dwTopTile;
     pTileBox->dwPosRightX  = pTileBox->dwPosLeftX + pSpriteLocationData->dwCurrentViewWidth;
     pTileBox->dwPosBottomY = pTileBox->dwPosTopY + pSpriteLocationData->dwCurrentViewHeight;
 
-	while(pTileBox->dwPosRightX > pTileEng->dwTileSizeX)
-	{
-		pTileBox->dwPosRightX = pTileBox->dwPosRightX - pTileEng->dwTileSizeX;
-		pTileBox->dwRightTile++;
-	}
+    while(pTileBox->dwPosRightX > pTileEng->dwTileSizeX)
+    {
+        pTileBox->dwPosRightX = pTileBox->dwPosRightX - pTileEng->dwTileSizeX;
+        pTileBox->dwRightTile++;
+    }
 
-	while(pTileBox->dwPosBottomY > pTileEng->dwTileSizeY)
-	{
-		pTileBox->dwPosBottomY = pTileBox->dwPosBottomY - pTileEng->dwTileSizeY;
-		pTileBox->dwBottomTile++;
-	}
+    while(pTileBox->dwPosBottomY > pTileEng->dwTileSizeY)
+    {
+        pTileBox->dwPosBottomY = pTileBox->dwPosBottomY - pTileEng->dwTileSizeY;
+        pTileBox->dwBottomTile++;
+    } 
 }
 
 
